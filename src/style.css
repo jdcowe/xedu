@@ -1,0 +1,20 @@
+/* ./your-css-folder/styles.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.btn-blue  {
+    @apply bg-blue-500 text-white font-bold py-3 px-9 rounded-full;
+}
+
+.btn-blue:hover {
+    @apply bg-blue-700;
+}
+
+.btn-pink  {
+    @apply bg-pink-500 text-white font-bold py-3 px-9 rounded-full;
+}
+
+.btn-pink:hover {
+    @apply bg-pink-500;
+}
