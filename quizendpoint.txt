@@ -1,0 +1,50 @@
+﻿//Quiz JSON
+
+quiz: {
+	id: abc123,
+	questions: [
+		{
+			id: 1,
+			questionText: "What is this?",
+			answers: [
+				{
+					id: 1,
+					text: "A Door",
+					correct: False
+				},
+				{
+					id: 2,
+					text: "A Song",
+					correct: False
+				},
+				{
+					id: 3,
+					text: "A Question",
+					correct: True
+				},
+				{
+					id: 4,
+					text: "An Essay",
+					correct: False
+				}
+			],
+			correctAnswer: 3
+		}
+	]
+}
+
+// You send back
+
+answers: [
+	{ 
+		questionId: 1,
+		answerId: 3,
+		answerTime: 3.25
+	}
+]
+
+// You receive
+
+score: {
+	result: 100
+}

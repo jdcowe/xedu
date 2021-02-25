@@ -12,6 +12,8 @@
 
     <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
      <!-- Demo styles -->
   <style>
@@ -61,7 +63,7 @@
 </head>
 <body>
 
-    <div class="bg-yellow-400 flex  justify-center ">
+    <div id="app" class="bg-yellow-400 flex  justify-center ">
         
             <div class="container max-w-lg border-2  border-white-500">
                 
@@ -71,36 +73,15 @@
                     <!-- Swiper -->
                     <div class="swiper-container">
                       <div class="swiper-wrapper">
-                        <div class="swiper-slide">Slide 1</div>
-                        <div class="swiper-slide"><video controls autoplay class="object-cover h-full" src="vid.mp4"></video></div>
-                        <div class="swiper-slide">Slide 3</div>
-                        <div class="swiper-slide">Slide 4</div>
-                        <div class="swiper-slide">Slide 5</div>
-                        <div class="swiper-slide">Slide 6</div>
-                        <div class="swiper-slide">Slide 7</div>
-                        <div class="swiper-slide">Slide 8</div>
-                        <div class="swiper-slide">Slide 9</div>
-                        <div class="swiper-slide">Slide 10</div>
+                        <swiper-item 
+                        v-for="slide in slides"
+                        :key="slide.id"
+                        :slide="slide"
+                        ></swiper-item>
                       </div>
                       <!-- Add Pagination -->
                       <div class="swiper-pagination"></div>
                     </div>
-                  
-                    <!-- Swiper JS -->
-                    <script src="../package/swiper-bundle.min.js"></script>
-                  
-                    <!-- Initialize Swiper -->
-                    <script>
-                      var swiper = new Swiper('.swiper-container', {
-                        direction: 'vertical',
-                        pagination: {
-                          el: '.swiper-pagination',
-                          clickable: true,
-                        },
-                      });
-                    </script>
-
-
 
                 </div>
 
@@ -120,4 +101,61 @@
     
     
 </body>
+<script>
+
+    Vue.component('swiper-item', {
+      template: `
+        <div class="swiper-slide h-95"><video autoplay class="object-cover h-full" :src="slide.videoUrl"></video></div>
+      `,
+      props: ['slide']
+    })
+
+    const app = new Vue({
+      el: '#app',
+      data: {
+          slides: [
+            {
+              title: "Class #1",
+              videoUrl: "vid.mp4",
+              id: 1
+            },
+            {
+              title: "Class #2",
+              videoUrl: "vid.mp4",
+              id: 2
+            },
+            {
+              title: "Class #3",
+              videoUrl: "vid.mp4",
+              id: 3
+            },
+            {
+              title: "Class #4",
+              videoUrl: "vid.mp4",
+              id: 4
+            },
+            {
+              title: "Class #4",
+              videoUrl: "vid.mp4",
+              id: 5
+            }
+          ],
+          info: null
+      },
+      mounted () {
+        axios
+          .get('https://api.coindesk.com/v1/bpi/currentprice.json')
+          .then(response => (this.info = response))
+      }
+    })
+
+    var swiper = new Swiper('.swiper-container', {
+      direction: 'vertical',
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+    });
+
+</script>
 </html>
