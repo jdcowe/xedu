@@ -157,7 +157,7 @@
 
     Vue.component('swiper-item', {
       template: `
-        <div class="swiper-slide bg-content-800"><video class="swiper-video" autoplay :src="slide.videoUrl"></video></div>
+        <div class="swiper-slide bg-content-800"><video class="swiper-video" autoplay controls :src="slide.videoUrl"></video></div>
       `,
       props: ['slide']
     })
