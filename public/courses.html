@@ -100,6 +100,7 @@
 
 <title>EXdu</title>
 </head>
+
 <body class="bg-content-200">
   
 <!--NavBar-->  
@@ -212,80 +213,29 @@
   <div class="col-span-1"></div>
 </div>
 
-    <div id="app" class="mt-5 flex-col content-center">
-                    
-                    <div class="grid grid-cols-10 flex ">
-                        <div class="col-span-1"></div>
-                        <div class="col-span-8">
-                            <div class="card shadow-xl image-full mx-10 h-96">
-                                <figure class="h-96">
-                                    <img src="img/hero.jpg">
-                                </figure> 
-                                <div class="justify-end card-body">
-                                    <h2 class="card-title">New Courses Coming Soon!</h2> 
-                                    <p>Rerum reiciendis beatae tenetur excepturi aut pariatur est eos. Sit sit necessitatibus veritatis sed molestiae voluptates incidunt iure sapiente.</p> 
-                                    <div class="space-x-2 card-actions">
-                                    <button class="btn btn-primary">Get Started</button>
-                                    </div>
-                                </div>
-                            </div> 
-                        </div>
-                        <div class="col-span-1"></div>
+<div class="flex-row flex ">
 
-                        <div class="col-span-1"></div>
-                        <div class="card mx-10 my-10 shadow-2xl lg:card-side bg-secondary text-content-primary col-span-4">
-                        <div class="bg-content-100 text-content-800 p-10 w-1/4">
-                            <h2 class="card-title">Top Rated
-                                <div class="badge mx-2 badge-secondary">NEW</div>
-                            </h2> 
-                            <p>Rerum reiciendis beatae tenetur excepturi aut pariatur est eos. Sit sit necessitatibus veritatis sed molestiae voluptates incidunt iure sapiente.</p> 
-                            <div class="justify-end space-x-2 card-actions">
-                                <button class="btn btn-secondary">More info</button>
-                            </div>
-                        </div>
-                            <div class="card-body w-3/4"> 
-                                    <div class="swiper-container">
-                                        <div class="swiper-wrapper">
-                                            <swiper-item 
-                                            v-for="slide in slides"
-                                            :key="slide.id"
-                                            :slide="slide"
-                                            ></swiper-item>
-                                        </div>
-                                        <!-- Add Pagination -->
-                                        <div class="swiper-pagination"></div>
-                                    </div>
-                            </div>
-                        </div>
-                        <div class="card mx-10 my-10 shadow-2xl lg:card-side bg-accent text-content-primary col-span-4">
-                            <div class="bg-content-100 text-content-800 p-10 w-1/4">
-                                <h2 class="card-title">Most Popular
-                                    <div class="badge mx-2 badge-secondary">NEW</div>
-                                </h2> 
-                                <p>Rerum reiciendis beatae tenetur excepturi aut pariatur est eos. Sit sit necessitatibus veritatis sed molestiae voluptates incidunt iure sapiente.</p> 
-                                <div class="justify-end space-x-2 card-actions">
-                                    <button class="btn btn-secondary">More info</button>
-                                </div>
-                            </div>
-                            <div class="card-body w-3/4">
-                                    <div class="swiper-container">
-                                        <div class="swiper-wrapper">
-                                            <swiper-item 
-                                            v-for="slide in slides"
-                                            :key="slide.id"
-                                            :slide="slide"
-                                            ></swiper-item>
-                                        </div>
-                                        <!-- Add Pagination -->
-                                        <div class="swiper-pagination"></div>
-                                    </div>
-                            </div>
-                        </div>
-                        <div class="col-span-1"></div>
-                    </div>
-
-                </div>
+    <div id="app" class="mt-10  ">
+      <!-- Swiper -->
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+          <swiper-item v-for="slide in slides" :key="slide.id" :slide="slide"></swiper-item>
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination"></div>
+      </div>
     </div>
+
+    <div class="bg-content-100 text-content-800 p-10 w-1/4 rounded-lg pr-20 w-96 mr-48">
+    
+          <div class="badge mx-2 badge-secondary">Leaderboard</div>
+
+          <div class="badge mx-2 badge-secondary">Q&A</div>
+     
+     
+    </div>
+  
+</div> 
 
 <!-- Footer -->
 <div class="grid grid-cols-10">
@@ -319,63 +269,61 @@
   <li></li>
   <li></li>
 </ul>
-<script>
 
-    Vue.component('swiper-item', {
-      template: `
+<script>
+  Vue.component('swiper-item', {
+    template: `
         <div class="swiper-slide bg-content-800"><video class="swiper-video" autoplay controls :src="slide.videoUrl"></video></div>
       `,
-      props: ['slide']
-    })
-    const app = new Vue({
-      el: '#app',
-      data: {
-          slides: [
-            {
-              title: "Class #1",
-              videoUrl: "vid.mp4",
-              id: 1
-            },
-            {
-              title: "Class #2",
-              videoUrl: "vid.mp4",
-              id: 2
-            },
-            {
-              title: "Class #3",
-              videoUrl: "vid.mp4",
-              id: 3
-            },
-            {
-              title: "Class #4",
-              videoUrl: "vid.mp4",
-              id: 4
-            },
-            {
-              title: "Class #4",
-              videoUrl: "vid.mp4",
-              id: 5
-            }
-          ],
-          info: null
-      },
-      mounted () {
-        axios
-          .get('https://api.coindesk.com/v1/bpi/currentprice.json')
-          .then(response => (this.info = response))
-      }
-    })
-    var swiper = new Swiper('.swiper-container', {
-    slidesPerView: 3,
-      centeredSlides: true,
-      spaceBetween: 40,
-      grabCursor: true,
-      loop: true,
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-      },
-    });
-
+    props: ['slide']
+  })
+  const app = new Vue({
+    el: '#app',
+    data: {
+      slides: [
+        {
+          title: "Class #1",
+          videoUrl: "img/vid_1.mp4",
+          id: 1
+        },
+        {
+          title: "Class #2",
+          videoUrl: "img/vid_2.mp4",
+          id: 2
+        },
+        {
+          title: "Class #3",
+          videoUrl: "img/vid_1.mp4",
+          id: 3
+        },
+        {
+          title: "Class #4",
+          videoUrl: "img/vid_1.mp4",
+          id: 4
+        },
+        {
+          title: "Class #4",
+          videoUrl: "img/vid_2.mp4",
+          id: 5
+        }
+      ],
+      info: null
+    },
+    mounted() {
+      axios
+        .get('https://api.coindesk.com/v1/bpi/currentprice.json')
+        .then(response => (this.info = response))
+    }
+  })
+  var swiper = new Swiper('.swiper-container', {
+    slidesPerView: 5,
+    centeredSlides: true,
+    spaceBetween: 40,
+    grabCursor: true,
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+  });
 </script>
 </html>
