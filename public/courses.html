@@ -6,7 +6,6 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/daisyui@0.11.5/dist/full.css" rel="stylesheet" type="text/css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper.min.css" />
   <link rel="stylesheet" href="css/background2.css">
@@ -134,7 +133,7 @@
     <div class="navbar col-span-10 shadow-xl header-bg mb-5 text-content-100 py-4">
       <div class="flex-1 px-2 mx-6">
         <span class="text-4xl font-bold">
-          <span class="text-secondary">X</span>Edu
+          <a href="index.html"><span class="text-secondary">X</span>Edu</a>
         </span>
       </div>
       <div class="flex-none hidden px-2 mx-2 lg:flex">
@@ -245,7 +244,8 @@
         <div class="card-body w-4/5">
           <div class="swiper-container swiper2">
             <div class="swiper-wrapper">
-              <swiper-item-large v-for="slide in slides" :key="slide.id" :slide="slide"></swiper-item-large>
+
+              <swiper-item-large v-for="slide in lessons" :key="slide.id" :slide="slide"></swiper-item-large>
             </div>
             <!-- Add Pagination -->
             <div class="swiper-pagination"></div>
@@ -254,15 +254,47 @@
       </div>
       <div class="bg-content-200 text-content-800 p-10 rounded-lg pr-20 mr-8 col-span-2">
           
-        <div class="badge mx-2 badge-secondary">Leaderboard</div>
-
-        <div class="badge mx-2 badge-secondary">Q&A</div>
+        <div class="badge badge-secondary badge-lg">Leaderboard</div>
+        <table class="mb-16">
+          <tr>
+            <th>Name</th>
+            <th>Score</th>
+          </tr>
+            <tr v-for="score in scores">
+              <td>{{ score.name }}</td>
+              <td>{{ score.score }}</td>
+            </tr>
+        </table> 
+        
+        <!-- Questions and Answers -->
+        <div class="badge badge-secondary badge-lg">Q&A</div>
+        <ul>
+          <li v-for="question in questions">
+            <h3 class="text-2xl">{{ question.title }}</h3>
+            <p>{{ question.body }}</p><br />
+          </li>
+        </ul>
   
   
   </div>
 
     </div>
   </div>
+
+
+
+  <!-- Footer -->
+<div class="grid grid-cols-10 bottom-0 z-40" >
+  <div class="col-span-1"></div>
+  <div class="navbar col-span-10 shadow-xl header-bg  text-content-100 py-4">
+      <div class="flex-1 px-2 justify-center mx-6">
+          <span class="text-2xl font-bold">
+            <a href="index.html"><span class="text-secondary">X</span>Edu</a>
+          </span>
+      </div>
+  </div>
+  <div class="col-span-1"></div>
+</div>
 
 </body>
 
@@ -280,16 +312,32 @@
   <li></li>
 </ul>
 <script>
-  Vue.component("swiper-item", {
-    template: `
-        <div class="swiper-slide bg-content-800"><video class="swiper-video" autoplay controls :src="slide.videoUrl"></video></div>
-      `,
-    props: ["slide"],
-  });
 
   Vue.component("swiper-item-large", {
     template: `
-        <div class="swiper-slide-large bg-content-800"><video class="swiper-video" autoplay controls :src="slide.videoUrl"></video></div>
+    <div class="swiper-slide-large bg-content-800">
+    <div class="h-full" v-if="slide.type == 'LESSON'">
+      <video class="swiper-video" autoplay controls :src="slide.video"></video>
+      </div>
+      <div class="h-full" v-else>
+        <div class="card shadow-sm bg-accent text-content-accent h-full">
+  <figure>
+    <img src="https://picsum.photos/id/1005/400/250">
+  </figure> 
+  <div class="card-body">
+    <h2 class="card-title">{{slide.title}}</h2> 
+    <p>{{slide.description}}</p> 
+    <div class="flex flex-col space-y-8 mt-12">
+      <button class="btn btn-primary">Answer 1</button>
+      <button class="btn btn-primary">Answer 2</button>
+      <button class="btn btn-primary">Answer 3</button>
+      <button class="btn btn-primary">Answer 4</button>
+    </div>
+  </div>
+</div>
+      </div>
+    </div>
+        
       `,
     props: ["slide"],
   });
@@ -324,12 +372,9 @@
           id: 5,
         },
       ],
-      info: null,
-    },
-    mounted() {
-      axios
-        .get("https://api.coindesk.com/v1/bpi/currentprice.json")
-        .then((response) => (this.info = response));
+      lessons: null,
+      questions: null,
+      scores: null,
     },
   });
 
@@ -359,6 +404,16 @@
       clickable: true,
     },
   });
+
+  axios
+    .get('https://luqman.edinburgh.domains/fatfree/xedu/api/course/1234')
+    .then(response => (app.lessons = response.data)).then(()=>{swiperLarge.update()})
+  axios
+    .get('https://luqman.edinburgh.domains/fatfree/xedu/api/course/1358/score')
+    .then(response => (app.scores = response.data))
+  axios
+    .get('https://luqman.edinburgh.domains/fatfree/xedu/api/course/1358/questions')
+    .then(response => (app.questions = response.data))
 </script>
 
 </html>

@@ -30,7 +30,7 @@
     width: 20px;
     height: 20px;
     background: rgba(101, 3, 230, 0.883);
-    animation: animate 25s linear infinite;
+    animation: animate 50s linear infinite;
     bottom: -150px;
     
 }
@@ -48,7 +48,7 @@
     width: 50px;
     height: 50px;
     animation-delay: 2s;
-    animation-duration: 12s;
+    animation-duration: 25s;
 }
 
 .circles li:nth-child(3){
@@ -84,7 +84,7 @@
     left: 35%;
     width: 150px;
     height: 150px;
-    animation-delay: 7s;
+    animation-delay: 30s;
 }
 
 .circles li:nth-child(8){
@@ -108,7 +108,7 @@
     width: 150px;
     height: 150px;
     animation-delay: 0s;
-    animation-duration: 11s;
+    animation-duration: 30s;
 }
 
 
@@ -117,12 +117,12 @@
 
     0%{
         transform: translateY(0) rotate(0deg);
-        opacity: 1;
+        opacity: 0.7;
         border-radius: 0;
     }
 
     100%{
-        transform: translateY(-1300px) rotate(720deg);
+        transform: translateY(-1300px) rotate(360deg);
         opacity: 0;
         border-radius: 50%;
     }
