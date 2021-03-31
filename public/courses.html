@@ -252,26 +252,26 @@
           </div>
         </div>
       </div>
-      <div class="bg-content-200 text-content-800 p-10 rounded-lg pr-20 mr-8 col-span-2">
+      <div class="bg-content-200 text-content-800 p-8 rounded-lg pr-20 mr-8 col-span-2">
           
-        <div class="badge badge-secondary badge-lg">Leaderboard</div>
+        <div class="badge badge-secondary mb-4 badge-lg text-2xl">Leaderboard</div>
         <table class="mb-16">
           <tr>
-            <th>Name</th>
-            <th>Score</th>
+            <th class="text-2xl">Name</th>
+            <th class="pl-16 text-2xl">Score</th>
           </tr>
             <tr v-for="score in scores">
-              <td>{{ score.name }}</td>
-              <td>{{ score.score }}</td>
+              <td class="font-medium text-lg">{{ score.name }}</td>
+              <td class="pl-16 font-semibold text-lg">{{ score.score }}</td>
             </tr>
         </table> 
         
         <!-- Questions and Answers -->
-        <div class="badge badge-secondary badge-lg">Q&A</div>
+        <div class="badge badge-secondary mb-4 badge-lg text-2xl">Q&A</div>
         <ul>
           <li v-for="question in questions">
-            <h3 class="text-2xl">{{ question.title }}</h3>
-            <p>{{ question.body }}</p><br />
+            <h3 class="text-xl font-medium semibold text-gray-900 ">{{ question.title }}</h3>
+            <p class="font-base text-base text-gray-600">{{ question.body }}</p><br />
           </li>
         </ul>
   
@@ -322,7 +322,8 @@
       <div class="h-full" v-else>
         <div class="card shadow-sm bg-accent text-content-accent h-full">
   <figure>
-    <img src="https://picsum.photos/id/1005/400/250">
+  
+    <img src="img/quiz_header.jpg">
   </figure> 
   <div class="card-body">
     <h2 class="card-title">{{slide.title}}</h2> 
