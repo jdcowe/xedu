@@ -9,6 +9,10 @@ Document
 ========
 */
 
+.card-style{
+  height:200%;
+}
+
 /**
 Use a better box model (opinionated).
 */
