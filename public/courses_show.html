@@ -181,13 +181,13 @@
         <div class="col-span-8 mx-10 pt-10 pb-10">
     
           <div class="grid grid-cols-3 gap-8">
-            <div class="card h-96 shadow-xl image-full" v-for="post in filteredList">
+            <div class="card h-96 shadow-xl image-full" v-for="course in filteredList">
               <figure>
-                <img v-bind:src="post.img">
+                <img v-bind:src="course.img">
               </figure>
               <div class="justify-end card-body">
-                <h2 class="card-title">{{ post.title }}</h2>
-                <p>{{ post.description }}</p>
+                <h2 class="card-title">{{ course.title }}</h2>
+                <p>{{ course.description }}</p>
                 <div class="card-actions">
                   <button class="btn btn-primary">Get Started</button>
                 </div>
@@ -245,6 +245,7 @@ const app = new Vue ({
   el: '#app',
   data: {
     search: '',
+    courses: [],
     postList : [
     new Post(
         'Virtual Reality', 
@@ -296,12 +297,16 @@ const app = new Vue ({
   },
   computed: {
     filteredList() {
-      return this.postList.filter(post => {
+      return this.courses.filter(post => {
         return post.title.toLowerCase().includes(this.search.toLowerCase())
       })
     }
   }
 })
+
+axios
+    .get('https://luqman.edinburgh.domains/fatfree/xedu/api/courses')
+    .then(response => (app.courses = response.data))
 
   /* Login form */
   function loginForm() {
