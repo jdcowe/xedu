@@ -183,11 +183,40 @@
           <div class="grid grid-cols-3 gap-8">
             <div class="card h-96 shadow-xl image-full" v-for="course in filteredList">
               <figure>
-                <img v-bind:src="course.img">
+                <img v-bind:src="course.image">
               </figure>
               <div class="justify-end card-body">
                 <h2 class="card-title">{{ course.title }}</h2>
-                <p>{{ course.description }}</p>
+                <p >{{ course.description }}</p>
+                <p id="rate">{{ course.rating }}</p>
+                
+                <Script>
+                    var x = document.getElementById("rate").value;
+                    document.write(x + " test");
+                </Script>
+
+                <!-- Star rating code from: https://codepen.io/jakobud/pen/GorbQY -->
+                <svg viewBox="0 0 1000 200" class='rating' width="80" height="80">
+                  <defs>
+                    <polygon id="star" points="100,0 131,66 200,76 150,128 162,200 100,166 38,200 50,128 0,76 69,66 " />
+                    <clipPath id="stars">
+                      <use xlink:href="#star" />
+                      <use xlink:href="#star" x="20%" />
+                      <use xlink:href="#star" x="40%" />
+                      <use xlink:href="#star" x="60%" />
+                      <use xlink:href="#star" x="80%" />
+                    </clipPath>
+                  </defs>
+                  <rect class='rating__background' clip-path="url(#stars)"></rect>
+
+                  <!-- Change the width of this rect to change the rating -->
+                  <star-rating 
+                    :rating="course.rating">
+                  </star-rating>
+                  
+                  <!-- <rect width="50%" class='rating__value' clip-path="url(#stars)"></rect> -->
+                </svg>
+
                 <div class="card-actions">
                   <button class="btn btn-primary">Get Started</button>
                 </div>
@@ -302,6 +331,18 @@ const app = new Vue ({
       })
     }
   }
+})
+
+Vue.component("star-rating", {
+   props: ["rating"],
+   methods: {
+      starWidth() {
+         return this.rating * 20
+      }
+   },
+   template: `
+      <rect width="starWidth + '%'"  class="rating__value' clip-path="url(#stars)"></rect>
+   `
 })
 
 axios

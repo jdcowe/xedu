@@ -9,9 +9,42 @@ Document
 ========
 */
 
+
+/*
+Star rating
+========
+*/
+
+svg {
+  margin-bottom: 0%;
+  margin-top: 0%;
+}
+
+
+.rating__background {
+  fill: #e7e5da;
+  stroke: red;
+  stroke-width: 1;
+  height: 100%;
+  width: 100%;
+}
+
+.rating__value {
+  fill: #FFB94B;
+  height: 100%;
+}
+
+
+/*
+========
+*/
+
+
 .card-style{
   height:200%;
 }
+
+
 
 /**
 Use a better box model (opinionated).
