@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" href="img/exdu.png" type="image/png" sizes="32x32">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
@@ -172,7 +173,8 @@
         <!-- Search box-->
         <div class="col-span-1"></div>
         <div class="col-span-8 mx-10 pt-10 ">
-          <input type="text" v-model="search" placeholder="Search Course" id="search-input" class="rounded-lg shadow-xl"></input>
+          <h1 class="text-4xl text-gray-500 float-left">Let's start learning. </h1>
+          <input type="text" v-model="search" placeholder="Search Course" id="search-input" class="rounded-lg shadow-xl float-right"></input>
         </div>
         <div class="col-span-1"></div>
     
@@ -188,14 +190,14 @@
               <div class="justify-end card-body">
                 <h2 class="card-title">{{ course.title }}</h2>
                 <p >{{ course.description }}</p>
-                <p id="rate">{{ course.rating }}</p>
+                <p class="mt-4 float-left" id="rate">{{ course.rating }} <star-rating class="float-right mr-32" :rating="course.rating">
+                </star-rating></p>
 
                 <!-- Star rating code from: https://codepen.io/jakobud/pen/GorbQY -->
                 
 
                   <!-- Change the width of this rect to change the rating -->
-                  <star-rating :rating="course.rating">
-                  </star-rating>
+                  
                   
                   <!-- <rect width="50%" class='rating__value' clip-path="url(#stars)"></rect> -->
                
@@ -256,7 +258,7 @@ class Post {
 Vue.component("star-rating", {
   template: `
   <div>
-    <svg viewBox="0 0 1000 200" class='rating' width="80" height="80">
+    <svg viewBox="0 0 1000 1000" class='rating' width="80" height="80">
       <defs>
         <polygon id="star" points="100,0 131,66 200,76 150,128 162,200 100,166 38,200 50,128 0,76 69,66 " />
         <clipPath id="stars">
@@ -284,55 +286,7 @@ const app = new Vue ({
   el: '#app',
   data: {
     search: '',
-    courses: [],
-    postList : [
-    new Post(
-        'Virtual Reality', 
-        'Rerum reiciendis beatae tenetur excepturi aut pariatur est eos. molestiae voluptates incidunt iure sapiente.', 
-        'img/vr.jpg'
-      ),
-      new Post(
-        'Animation', 
-        'Rerum reiciendis beatae tenetur excepturi aut pariatur est eos. molestiae voluptates incidunt iure sapiente.', 
-        'img/animation.png'
-      ),
-      new Post(
-        'Videography', 
-        'Rerum reiciendis beatae tenetur excepturi aut pariatur est eos. molestiae voluptates incidunt iure sapiente.', 
-        'img/video.jpg'
-      ),
-      new Post(
-        'Marketing', 
-        'Rerum reiciendis beatae tenetur excepturi aut pariatur est eos. molestiae voluptates incidunt iure sapiente.', 
-        'img/marketing.jpg'
-      ),
-      new Post(
-        'Music', 
-        'Rerum reiciendis beatae tenetur excepturi aut pariatur est eos. molestiae voluptates incidunt iure sapiente.', 
-        'img/music.jpg'
-      ),
-      new Post(
-        'Social Media', 
-        'Rerum reiciendis beatae tenetur excepturi aut pariatur est eos. molestiae voluptates incidunt iure sapiente.', 
-        'img/socialmedia.jpg'
-      ),
-      new Post(
-        'User Experience', 
-        'Rerum reiciendis beatae tenetur excepturi aut pariatur est eos. molestiae voluptates incidunt iure sapiente.', 
-        'img/ux.jpg'
-      ),
-      new Post(
-        'Web Development', 
-        'Rerum reiciendis beatae tenetur excepturi aut pariatur est eos. molestiae voluptates incidunt iure sapiente.', 
-        'img/web.jpg'
-      ),
-      new Post(
-        'Photography', 
-        'Rerum reiciendis beatae tenetur excepturi aut pariatur est eos. molestiae voluptates incidunt iure sapiente.', 
-        'img/photography.jpg'
-      ),
-     
-]
+    courses: []
   },
   computed: {
     filteredList() {
