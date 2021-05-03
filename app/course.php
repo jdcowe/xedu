@@ -44,4 +44,12 @@ Class Course extends Controller {
         )));
         echo json_encode($list);
     }
+
+    function createCourse($f3, $params) {
+        $course=new DB\SQL\Mapper($f3->get('DB'),"course");
+        $course->copyfrom('POST');
+        $course->save();
+        echo json_encode($f3->get('POST'));
+
+    }
 }

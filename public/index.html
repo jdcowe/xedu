@@ -132,6 +132,7 @@
 <title>EXdu</title>
 </head>
 <body class="bg-content-200">
+<div id="app">
   
 <!--NavBar-->  
 <div class="grid grid-cols-10 sticky top-0 z-40" >
@@ -154,28 +155,26 @@
             </svg>
             XEdu Alpha Submission PDF
           </a>
-          <a class="btn btn-ghost rounded-btn hover:text-content-100">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-              class="inline-block w-5 mr-2 stroke-current">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9">
-              </path>
-            </svg>
-            Notifications
-          </a>
+
 
             <!-- Login Modal-->
-        <a href="#my-modal-login" class="btn btn-primary mx-2">Login</a>
+        <a v-if="!usernameToken" href="#my-modal-login" class="btn btn-primary mx-2">Login</a>
+        <div v-else>
+          <span class="btn btn-ghost rounded-btn">Hello, {{usernameToken}}</span>
+          <a href="create.html" class="btn btn-primary mx-2">Create a Course</a>
+        </div>
+        
 
         <div id="my-modal-login" class="modal">
           <div class="modal-box">
 
             <!-- Login Form-->
-            <form id="formLogin" name="formLogin" method="POST" action="#" onsubmit="loginForm()" class=" p-3 pl-10 pr-10 grid grid-cols-1 gap-2">
+            <form id="formLogin" name="formLogin" class=" p-3 pl-10 pr-10 grid grid-cols-1 gap-2">
               <h4 class="block text-7xl font-bold text-purple-600 text-center pb-4"><span class="text-secondary">X</span>Edu</h4>
 
               <label class="block flex ">
                 <input type="text" name="username"
+                v-model="username"
                   class="text-gray-800 mt-1 block w-full rounded-md rounded-full border-gray-300 shadow-md focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 pl-2 "
                   placeholder="Enter Username">
               </label>
@@ -186,7 +185,7 @@
                   placeholder="Enter Password">
               </label>
 
-              <button class="btn btn-secondary mt-5" type="submit" > Login</button>
+              <button class="btn btn-secondary mt-5" v-on:click="login()" > Login</button>
 
             </form>
 
@@ -198,7 +197,8 @@
         </div>
 
         <!-- Registration Modal-->
-        <a href="#my-modal-reg" class="btn btn-secondary">Register</a>
+        <a v-if="usernameToken === ''" href="#my-modal-reg" class="btn btn-secondary">Register</a>
+        <button v-else class="btn btn-secondary" v-on:click="logout()">Logout</button>
         <div id="my-modal-reg" class="modal">
           <div class="modal-box">
 
@@ -207,7 +207,7 @@
               <h4 class="block text-7xl font-bold text-purple-600 text-center pb-4"> <span class="text-secondary">X</span>Edu</h4>
 
               <label class="block flex ">
-                <input type="text"
+                <input v-model="username" type="text"
                   class="mt-1 block w-full rounded-md rounded-full border-gray-300 shadow-md focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 pl-5"
                   placeholder="Username">
               </label>
@@ -224,7 +224,7 @@
                   placeholder="Confirm Password">
               </label>
 
-              <button class="btn btn-secondary mt-5 ">Sign Up</button>
+              <button v-on:click="login()" class="btn btn-secondary mt-5 ">Sign Up</button>
 
             </div>
 
@@ -242,7 +242,7 @@
   <div class="col-span-1"></div>
 </div>
 
-    <div id="app" class="mt-5 flex-col content-center">
+    <div class="mt-5 flex-col content-center">
                     
                     <div class="grid grid-cols-10 flex ">
                         <div class="col-span-1"></div>
@@ -252,10 +252,10 @@
                                     <img src="img/hero.jpg">
                                 </figure> 
                                 <div class="justify-end card-body">
-                                    <h2 class="card-title text-5xl">New Courses Coming Soon!</h2> 
-                                    <p>Watch for new courses coming soon and get ready to learn!</p> 
+                                    <h2 class="card-title text-5xl">Pick of the Day</h2> 
+                                    <p>A personalized course just for you!</p> 
                                     <div class="space-x-2 card-actions">
-                                    <button class="btn btn-primary"><a href="courses_show.html"> Get Starte</a>d</button>
+                                    <button class="btn btn-primary"v-on:click="getCourse(1368)"> Get Started</button>
                                     </div>
                                 </div>
                             </div> 
@@ -270,7 +270,7 @@
                             </h2> 
                             <p>These are the courses that our students love the most! </p> 
                             <div class="justify-start space-x-2 card-actions">
-                                <button class="btn btn-secondary">More info</button>
+                                <a href="courses_show.html" class="btn btn-secondary">See All</a>
                             </div>
                         </div>
                             <div class="card-body w-3/5"> 
@@ -296,7 +296,7 @@
                                 </h2> 
                                 <p>These are the most watched courses from across XEdu.</p> 
                                 <div class="justify-start space-x-2 card-actions">
-                                    <button class="btn btn-secondary">More info</button>
+                                    <a href="courses_show.html" class="btn btn-secondary">See All</a>
                                 </div>
                             </div>
                             <div class="card-body w-3/5">
@@ -326,7 +326,7 @@
                                 </h2> 
                                 <p>Here is a selection of all the courses available on XEdu.</p> 
                                 <div class="justify-start space-x-2 card-actions">
-                                    <button class="btn btn-secondary">More info</button>
+                                    <a href="courses_show.html" class="btn btn-secondary">See All</a>
                                 </div>
                             </div>
                             <div class="card-body w-4/5">
@@ -377,6 +377,7 @@
   <li></li>
   <li></li>
 </ul>
+</div>
 <script>
     const app = new Vue({
       el: '#app',
@@ -410,12 +411,26 @@
           ],
           courses: null,
           popular: null,
-          top: null
+          top: null,
+          username: "",
+          usernameToken: localStorage.username
       },
       methods: {
         getCourse: function (courseID) {
             window.location = 'courses.html?id=' + courseID
+        },
+        login: function () {
+          localStorage.username = this.username
+          console.log(this.username)
+          location.assign('#')
+          location.reload()
+        },
+        logout: function() {
+          localStorage.username = ""
+          location.reload()
         }
+      },
+      watch: {
       }
     })
 
@@ -497,32 +512,15 @@
     })
 
     axios
-        .get('https://luqman.edinburgh.domains/fatfree/xedu/api/courses')
+        .get('https://jordancowe.edinburgh.domains/beta/api/courses')
         .then(response => (app.courses = response.data)).then(()=>{swiperLarge.update()})
     axios
-        .get('https://luqman.edinburgh.domains/fatfree/xedu/api/courses/popular')
+        .get('https://jordancowe.edinburgh.domains/beta/api/courses/popular')
         .then(response => (app.popular = response.data)).then(()=>{swiper3.update()})
     axios
-        .get('https://luqman.edinburgh.domains/fatfree/xedu/api/courses/toprated')
+        .get('https://jordancowe.edinburgh.domains/beta/api/courses/toprated')
         .then(response => (app.top = response.data)).then(()=>{swiper1.update()})
-
-
-  /* Login form */
-  function loginForm() {
-  var username = document.forms["formLogin"]["username"].value;
-  var password = document.forms["formLogin"]["password"].value;
   
-  axios.post('https://luqman.edinburgh.domains/fatfree/xedu/api/login', {
-    username: username,
-    password: password
-  })
-  .then((response) => {
-    console.log(response);
-  }, (error) => {
-    console.log(error);
-  });
-  
-}
 
 </script>
 </html>

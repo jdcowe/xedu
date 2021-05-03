@@ -130,8 +130,10 @@
 
 <body class="bg-content-800">
   <div id="app" class="flex-col content-center h-screen">
-  <!--NavBar-->
-  <div class="grid grid-cols-10">
+  <!--NavBar-->  
+<div class="grid grid-cols-10 sticky top-0 z-40" >
+  <div class="col-span-1"></div>
+
     <div class="navbar col-span-10 shadow-xl header-bg mb-5 text-content-100 py-4">
       <div class="flex-1 px-2 mx-6">
         <span class="text-4xl font-bold">
@@ -140,103 +142,101 @@
       </div>
       <div class="flex-none hidden px-2 mx-2 lg:flex">
         <div class="flex items-stretch">
-          <a class="btn btn-ghost rounded-btn hover:text-content-100">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-              class="inline-block w-5 mr-2 stroke-current">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
-              </path>
-            </svg>
-            Likes
-
-          </a>
-          <a class="btn btn-ghost rounded-btn hover:text-content-100">
+          <a class="btn btn-ghost rounded-btn hover:text-content-100" href="XEdu-Alpha.pdf">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
               class="inline-block w-5 mr-2 stroke-current">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9">
               </path>
             </svg>
-            Notifications
+            XEdu Alpha Submission PDF
           </a>
 
-          <!-- Login Modal-->
-          <a href="#my-modal-login" class="btn btn-primary mx-2">Login</a>
 
-          <div id="my-modal-login" class="modal">
-            <div class="modal-box">
+            <!-- Login Modal-->
+        <a v-if="!usernameToken" href="#my-modal-login" class="btn btn-primary mx-2">Login</a>
+        <div v-else>
+          <span class="btn btn-ghost rounded-btn">Hello, {{usernameToken}}</span>
+          <a href="create.html" class="btn btn-primary mx-2">Create a Course</a>
+        </div>
+        
 
-              <!-- Login Form-->
-              <div class=" p-3 pl-10 pr-10 grid grid-cols-1 gap-2">
-                <h4 class="block text-7xl font-bold text-purple-600 text-center pb-4"><span
-                    class="text-secondary">X</span>Edu</h4>
+        <div id="my-modal-login" class="modal">
+          <div class="modal-box">
 
-                <label class="block flex ">
-                  <input type="text"
-                    class="mt-1 block w-full rounded-md rounded-full border-gray-300 shadow-md focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 pl-5"
-                    placeholder="Username">
-                </label>
+            <!-- Login Form-->
+            <form id="formLogin" name="formLogin" class=" p-3 pl-10 pr-10 grid grid-cols-1 gap-2">
+              <h4 class="block text-7xl font-bold text-purple-600 text-center pb-4"><span class="text-secondary">X</span>Edu</h4>
 
-                <label class="block flex ">
-                  <input type="password"
-                    class="mt-1 block w-full rounded-md rounded-full border-gray-300 shadow-md focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 pl-5"
-                    placeholder="Password">
-                </label>
+              <label class="block flex ">
+                <input type="text" name="username"
+                v-model="username"
+                  class="text-gray-800 mt-1 block w-full rounded-md rounded-full border-gray-300 shadow-md focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 pl-2 "
+                  placeholder="Enter Username">
+              </label>
 
-                <button class="btn btn-secondary mt-5 ">login</button>
+              <label class="block flex ">
+                <input type="password" name="password"
+                  class="text-gray-800 mt-1 block w-full rounded-md rounded-full border-gray-300 shadow-md focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 pl-2"
+                  placeholder="Enter Password">
+              </label>
 
-              </div>
+              <button class="btn btn-secondary mt-5" v-on:click="login()" > Login</button>
 
-              <div class="modal-action mt-1 pr-10">
-                <a href="#" class="btn ">Close</a>
-              </div>
+            </form>
+
+            <div class="modal-action mt-1 pr-10">
+              <a href="#" class="btn ">Close</a>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Registration Modal-->
+        <a v-if="usernameToken === ''" href="#my-modal-reg" class="btn btn-secondary">Register</a>
+        <button v-else class="btn btn-secondary" v-on:click="logout()">Logout</button>
+        <div id="my-modal-reg" class="modal">
+          <div class="modal-box">
+
+            <!-- Registration Form-->
+            <div class=" p-3 pl-10 pr-10 grid grid-cols-1 gap-2">
+              <h4 class="block text-7xl font-bold text-purple-600 text-center pb-4"> <span class="text-secondary">X</span>Edu</h4>
+
+              <label class="block flex ">
+                <input v-model="username" type="text"
+                  class="mt-1 block w-full rounded-md rounded-full border-gray-300 shadow-md focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 pl-5"
+                  placeholder="Username">
+              </label>
+
+              <label class="block flex ">
+                <input type="password"
+                  class="mt-1 block w-full rounded-md rounded-full border-gray-300 shadow-md focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 pl-5"
+                  placeholder="Password">
+              </label>
+
+              <label class="block flex">
+                <input type="password"
+                  class="mt-1 block w-full rounded-md rounded-full border-gray-300 shadow-md focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 pl-5"
+                  placeholder="Confirm Password">
+              </label>
+
+              <button v-on:click="login()" class="btn btn-secondary mt-5 ">Sign Up</button>
 
             </div>
-          </div>
 
-          <!-- Registration Modal-->
-          <a href="#my-modal-reg" class="btn btn-secondary">Register</a>
-          <div id="my-modal-reg" class="modal">
-            <div class="modal-box">
-
-              <!-- Registration Form-->
-              <div class=" p-3 pl-10 pr-10 grid grid-cols-1 gap-2">
-                <h4 class="block text-7xl font-bold text-purple-600 text-center pb-4"> <span
-                    class="text-secondary">X</span>Edu</h4>
-
-                <label class="block flex ">
-                  <input type="text"
-                    class="mt-1 block w-full rounded-md rounded-full border-gray-300 shadow-md focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 pl-5"
-                    placeholder="Username">
-                </label>
-
-                <label class="block flex ">
-                  <input type="password"
-                    class="mt-1 block w-full rounded-md rounded-full border-gray-300 shadow-md focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 pl-5"
-                    placeholder="Password">
-                </label>
-
-                <label class="block flex">
-                  <input type="password"
-                    class="mt-1 block w-full rounded-md rounded-full border-gray-300 shadow-md focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 pl-5"
-                    placeholder="Confirm Password">
-                </label>
-
-                <button class="btn btn-secondary mt-5 ">Sign Up</button>
-
-              </div>
-
-              <div class="modal-action mt-1 pr-10">
-                <a href="#" class="btn ">Close</a>
-              </div>
-
+            <div class="modal-action mt-1 pr-10">
+              <a href="#" class="btn ">Close</a>
             </div>
-          </div>
 
+          </div>
+        </div>
+         
         </div>
       </div>
     </div>
-  </div>
+
+  <div class="col-span-1"></div>
+</div>
 
   
 
@@ -378,7 +378,21 @@
       lessons: null,
       questions: null,
       scores: null,
+      username: "",
+      usernameToken: localStorage.username
     },
+    methods: {
+      login: function () {
+          localStorage.username = this.username
+          console.log(this.username)
+          location.assign('#')
+          location.reload()
+        },
+        logout: function() {
+          localStorage.username = ""
+          location.reload()
+        }
+    }
   });
 
   var swiper = new Swiper(".swiper1", {
@@ -409,13 +423,13 @@
   });
 
   axios
-    .get('https://luqman.edinburgh.domains/fatfree/xedu/api/course/1234')
+    .get('https://jordancowe.edinburgh.domains/beta/api/course/1234')
     .then(response => (app.lessons = response.data)).then(()=>{swiperLarge.update()})
   axios
-    .get('https://luqman.edinburgh.domains/fatfree/xedu/api/course/1358/score')
+    .get('https://jordancowe.edinburgh.domains/beta/api/course/1358/score')
     .then(response => (app.scores = response.data))
   axios
-    .get('https://luqman.edinburgh.domains/fatfree/xedu/api/course/1358/questions')
+    .get('https://jordancowe.edinburgh.domains/beta/api/course/1358/questions')
     .then(response => (app.questions = response.data))
 </script>
 
